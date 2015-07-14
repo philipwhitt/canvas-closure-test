@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<project name="Portal(Base)" default="build">
+
+	<target name="compile-js">
+		<mkdir dir="build" /> 
+
+		<property name="bvitkCompilationLevel" value="SIMPLE_OPTIMIZATIONS" />
+
+		<exec executable="src/closure/closure-library/closure/bin/build/closurebuilder.py" failonerror="true" logError="true">
+			<arg value="--namespace=app.Main" />
+			<arg value="--root=src/closure" /> 
+			<arg value="--root=src/js" /> 
+			<arg line='-f "--externs=src/externs/jquery.js"' /> 
+			<arg line='-f "--externs=src/externs/bootstrap.js"' />
+			<arg line='-f "--externs=src/externs/paper.js"' />
+			<arg value="--output_file=build/app.js" />
+			<arg value="--output_mode=compiled" />
+			<arg value="--compiler_jar=src/closure/closure-compiler/compiler.jar" />
+			<arg value="--compiler_flag=--output_wrapper=(function(){%output%})();" /> 
+			<arg value="--compiler_flag=--compilation_level=ADVANCED_OPTIMIZATIONS" />
+			<arg value="--compiler_flag=--warning_level=VERBOSE" />
+			<arg value="--compiler_flag=--jscomp_error=checkTypes" />
+			<arg value="--compiler_flag=--jscomp_warning=accessControls" /> 
+			<arg value="--compiler_flag=--define=goog.DEBUG=true" />
+		</exec>
+	</target>
+
+	<target name="build" depends="compile-js" />
+
+	<target name="install">
+		<copy file="build/app.js" tofile="httpdocs/js/app.js" overwrite="true" />
+	</target>
+
+</project>

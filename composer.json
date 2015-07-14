@@ -1,0 +1,9 @@
+{
+	"min-stability" : "dev",
+	"require": {
+	},
+	"autoload": {
+		"psr-0": {
+		}
+	}
+}

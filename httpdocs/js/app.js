@@ -1,0 +1,2 @@
+(function(){function a(){}a.prototype.draw=function(){paper.project.activeLayer.removeChildren();var c=new paper.Path.Rectangle(new paper.Point(80,50),new paper.Size(100,50));c.style={fillColor:"white",strokeColor:"black"};c.clone().strokeColor="red";paper.view.onFrame=function(){c.rotate(3)};paper.view.draw()};a.prototype.play=function(){paper.view.play()};var b=new a,d=document.getElementById("canvas");d.getContext("2d");paper.setup(d);window.addEventListener("resize",e,!1);e();
+function e(){d.width=window.innerWidth;d.height=window.innerHeight;b.draw();b.play()};})();
