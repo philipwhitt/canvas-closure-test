@@ -11,6 +11,9 @@ paper.setup = function(canvas){};
 paper.project = {};
 
 /** @public */
+paper.center = {};
+
+/** @public */
 paper.project.activeLayer = {};
 
 /** @public */
@@ -24,6 +27,8 @@ paper.view.draw = function(){};
 paper.view.play = function(){};
 /** @public */
 paper.view.onFrame = function(){};
+/** @public */
+paper.view.onResize = function(){};
 
 /** @constructor */
 paper.Path = function() {};

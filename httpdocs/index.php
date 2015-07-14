@@ -7,15 +7,22 @@
 	<title>Canvas</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<style>
-		* { margin:0; padding:0; } /* to remove the top and left whitespace */
+		html,
+		body {
+			margin: 0;
+			overflow: hidden;
+			height: 100%;
+		}
 
-		html, body { width:100%; height:100%; } /* just to be sure these are full screen*/
-
-		canvas { display:block; } 
+		/* Scale canvas with resize attribute to full size */
+		canvas[resize] {
+			width: 100%;
+			height: 100%;
+		}
 	</style>
 </head>
 <body>
-	<canvas id="canvas" resize></canvas>
+	<canvas id="canvas" resize="true"></canvas>
 	<script src="/js/paper-full.min.js"></script>
 	<script src="/js/app.js"></script>
 </body>

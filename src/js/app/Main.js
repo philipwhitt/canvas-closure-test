@@ -17,6 +17,7 @@ app.Main.prototype.draw = function() {
 		fillColor: 'white',
 		strokeColor: 'black'
 	};
+	path.position = paper.view.center;
 
 	// Create a copy of the path and set its stroke color to red:
 	var copy = path.clone();
@@ -27,37 +28,19 @@ app.Main.prototype.draw = function() {
 
 	paper.view.onFrame = function(event) {
 		path.rotate(3);
+		copy.rotate(.5);
 	};
 
-	paper.view.draw();
+	paper.view.onResize = function(event) {
+		path.position = paper.view.center;
+		copy.position = paper.view.center;
+	};
 };
-
-/** @public */
-app.Main.prototype.play = function() {
-	paper.view.play();
-};
-
-
-
-
-
 
 var main = new app.Main();
-
 var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
 
 paper.setup(canvas);
-
-// resize the canvas to fill browser window dynamically
-window.addEventListener('resize', resizeCanvas, false);
-
-resizeCanvas();
-
-function resizeCanvas() {
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
-	
-	main.draw();
-	main.play();
-}
+main.draw();
+paper.view.draw();
+paper.view.play();
