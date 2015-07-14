@@ -11,8 +11,6 @@
 			<arg value="--namespace=app.Main" />
 			<arg value="--root=src/closure" /> 
 			<arg value="--root=src/js" /> 
-			<arg line='-f "--externs=src/externs/jquery.js"' /> 
-			<arg line='-f "--externs=src/externs/bootstrap.js"' />
 			<arg line='-f "--externs=src/externs/paper.js"' />
 			<arg value="--output_file=build/app.js" />
 			<arg value="--output_mode=compiled" />
