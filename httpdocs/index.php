@@ -23,11 +23,12 @@
 	</style>
 </head>
 <body>
-	<img id="grass" src="/images/grass.gif" />
+	<img id="grass" src="/images/grass.png" />
 	<img id="house" src="/images/house.gif" />
 	<img id="wall" src="/images/wall.gif" />
 	<img id="wallEnd" src="/images/wallEnd.gif" />
 	<img id="female" src="/images/female.png" />
+	<img id="treem" src="/images/treem.png" />
 	<canvas id="canvas" resize="true"></canvas>
 	<script src="/js/paper-full.min.js"></script>
 	<script src="/js/app.js"></script>
