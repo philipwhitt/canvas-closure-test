@@ -26,6 +26,7 @@
 	<img id="house" src="/images/house.gif" />
 	<img id="wall" src="/images/wall.gif" />
 	<img id="wallEnd" src="/images/wallEnd.gif" />
+	<img id="female" src="/images/female.png" />
 	<canvas id="canvas" resize="true"></canvas>
 	<script src="/js/paper-full.min.js"></script>
 	<script src="/js/app.js"></script>

@@ -32,6 +32,27 @@ paper.view.onFrame = function(){};
 /** @public */
 paper.view.onResize = function(){};
 
+
+
+
+/** 
+ * @constructor 
+ */
+paper.KeyEvent = function(){};
+/** 
+ * @public 
+ */
+paper.KeyEvent.prototype.type = '';
+/** 
+ * @public 
+ */
+paper.KeyEvent.prototype.character = '';
+/** 
+ * @public 
+ */
+paper.KeyEvent.prototype.key = '';
+
+
 /** 
  * @constructor 
  */
@@ -69,6 +90,10 @@ paper.ToolEvent.prototype.count;
  */
 paper.ToolEvent.prototype.item;
 
+
+
+
+
 /** 
  * @constructor 
  */
@@ -88,6 +113,21 @@ paper.Tool.prototype.onMouseDrag = function(event) {}
  * @public 
  */
 paper.Tool.prototype.onMouseUp = function(event) {}
+/** 
+ * @param {paper.KeyEvent} event
+ * @public 
+ */
+paper.Tool.prototype.onKeyDown = function(event) {}
+/** 
+ * @param {paper.KeyEvent} event
+ * @public 
+ */
+paper.Tool.prototype.onKeyUp = function(event) {}
+
+
+
+
+
 
 /** 
  * @param {Object=} options

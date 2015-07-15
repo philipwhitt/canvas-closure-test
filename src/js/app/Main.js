@@ -13,7 +13,33 @@ app.Main.prototype.grid = function() {
 	paper.project.activeLayer.removeChildren();
 
 	this.drawGrid();
+	this.addItems();
+	
+	var character = new paper.Raster('female');
+	character.position = new paper.Point(character.size.width/2, character.size.height/2);
 
+	var tool = new paper.Tool();
+	tool.onKeyDown = function(event) {
+		if (event.key == 'right') {
+			character.position.x += 60;
+		}
+
+		if (event.key == 'left') {
+			character.position.x -= 60;
+		}
+
+		if (event.key == 'up') {
+			character.position.y -= 60;
+		}
+
+		if (event.key == 'down') {
+			character.position.y += 60;
+		}
+	};
+};
+
+/** @public */
+app.Main.prototype.addItems = function() {
 	var curX = 0;
 	var curY = 0;
 
@@ -26,7 +52,6 @@ app.Main.prototype.grid = function() {
 			if (target.type) {
 				var asset = new paper.Raster(target.type);
 				asset.position = new paper.Point(asset.size.width/2 + curX, asset.size.height/2 + curY);
-				// asset.position = new paper.Point(curX, curY);
 			}
 
 			curX += 60;
@@ -35,9 +60,6 @@ app.Main.prototype.grid = function() {
 		curX = 0;
 		curY += 60;
 	}
-
-	// var home = new paper.Raster('house');
-	// home.position = new paper.Point(home.size.width/2, home.size.height/2);
 };
 
 /** @public */
@@ -52,7 +74,7 @@ app.Main.prototype.drawGrid = function() {
 		);
 		path.style = {
 			fillColor   : '#62B821',
-			strokeColor : '#458117'
+			strokeColor : '#5BB01B'
 		};
 		curX += 60;
 
