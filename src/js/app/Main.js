@@ -12,29 +12,41 @@ app.Main = function() {};
 app.Main.prototype.grid = function() {
 	paper.project.activeLayer.removeChildren();
 
-	this.drawGrid();
+	// this.drawGrid();
 	this.addItems();
 	
 	var character = new paper.Raster('female');
 	character.position = new paper.Point(character.size.width/2, character.size.height/2);
 
 	var tool = new paper.Tool();
+	var move={where:null, amount:0};
 	tool.onKeyDown = function(event) {
-		if (event.key == 'right') {
-			character.position.x += 60;
+		if (move.amount == 0) {
+			move.where = event.key;
+			move.amount = 60;
 		}
+	};
 
-		if (event.key == 'left') {
-			character.position.x -= 60;
-		}
+	paper.view.onFrame = function(event) {
+		if (move.amount > 0) {
+			if (move.where == 'right') {
+				character.position.x+=4;
+			}
 
-		if (event.key == 'up') {
-			character.position.y -= 60;
-		}
+			if (move.where == 'left') {
+				character.position.x-=4;
+			}
 
-		if (event.key == 'down') {
-			character.position.y += 60;
-		}
+			if (move.where == 'up') {
+				character.position.y-=4;
+			}
+
+			if (move.where == 'down') {
+				character.position.y+=4;
+			}
+
+			move.amount-=4;
+		}	
 	};
 };
 

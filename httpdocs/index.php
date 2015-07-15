@@ -18,6 +18,7 @@
 		canvas[resize] {
 			width: 100%;
 			height: 100%;
+			background: #62B821;
 		}
 	</style>
 </head>
