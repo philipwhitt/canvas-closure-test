@@ -5,6 +5,7 @@ goog.require('util.Debug');
 goog.require('item.Grass');
 goog.require('item.Tree');
 goog.require('item.Item');
+goog.require('character.User');
 
 /**
  * @constructor
@@ -15,23 +16,11 @@ app.Main = function() {};
 app.Main.prototype.draw = function() {
 	paper.project.activeLayer.removeChildren();
 	
-	var character = new paper.Raster('female');
-	character.position = new paper.Point(character.size.width/2 + (60 * 10), character.size.height/2 + (60 * 10));
-
-	var tool = new paper.Tool();
-	var move={where:null, amount:0};
-	tool.onKeyDown = function(event) {
-		if (move.amount == 0) {
-			move.where = event.key;
-			move.amount = 60;
-		}
-	};
+	var user = new character.User();
 
 	this.fillOutMap();
 	this.addItems();
 	this.drawGrid();
-
-	util.Debug.log(app.Map);
 
 	var lastLoop = new Date;
 	var frames = 0;
@@ -52,38 +41,7 @@ app.Main.prototype.draw = function() {
 	    	frames=0;
 	    }
 
-		if (move.amount > 0) {
-			if (move.where == 'right') {
-				if (move.amount == 60) {
-					var goingX = Math.floor((character.position.x + 60)/60);
-					var curY = Math.floor((character.position.y)/60);
-
-					var obj = app.Map[curY][goingX];
-
-					if (obj && obj.item && !obj.item.canPass) {
-						move.where = null;
-						move.amount = 0;
-						return;
-					}
-				}
-
-				character.position.x+=4;
-			}
-
-			if (move.where == 'left') {
-				character.position.x-=4;
-			}
-
-			if (move.where == 'up') {
-				character.position.y-=4;
-			}
-
-			if (move.where == 'down') {
-				character.position.y+=4;
-			}
-
-			move.amount-=4;
-		}	
+	    user.onFrame();
 	};
 };
 
