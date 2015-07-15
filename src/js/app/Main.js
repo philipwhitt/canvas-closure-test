@@ -9,7 +9,7 @@ goog.require('util.Debug');
 app.Main = function() {};
 
 /** @public */
-app.Main.prototype.grid = function() {
+app.Main.prototype.draw = function() {
 	paper.project.activeLayer.removeChildren();
 	
 	var character = new paper.Raster('female');
@@ -104,7 +104,6 @@ app.Main.prototype.drawGrid = function() {
 			new paper.Size(60, 60)
 		);
 		path.style = {
-			fillColor   : '#62B821',
 			strokeColor : '#5BB01B'
 		};
 		curX += 60;
@@ -124,10 +123,10 @@ var main = new app.Main();
 var canvas = document.getElementById('canvas');
 
 paper.setup(canvas);
-main.grid();
+main.draw();
 paper.view.draw();
 paper.view.play();
 
 paper.view.onResize = function(event) {
-	main.grid();
+	main.draw();
 };
