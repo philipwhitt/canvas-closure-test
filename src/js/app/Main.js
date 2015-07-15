@@ -1,11 +1,114 @@
 goog.provide('app.Main');
 
+goog.require('app.Map');
 goog.require('util.Debug');
 
 /**
  * @constructor
  */
-app.Main = function() {
+app.Main = function() {};
+
+/** @public */
+app.Main.prototype.grid = function() {
+	paper.project.activeLayer.removeChildren();
+
+	this.drawGrid();
+
+	var curX = 0;
+	var curY = 0;
+
+	// row
+	for (var row = 0, len=app.Map.length; row<len; row++) {
+		// col
+		for (var col = 0, lenCol=app.Map[row].length; col<lenCol; col++) {
+			var target = app.Map[row][col];
+
+			if (target.type) {
+				var asset = new paper.Raster(target.type);
+				asset.position = new paper.Point(asset.size.width/2 + curX, asset.size.height/2 + curY);
+				// asset.position = new paper.Point(curX, curY);
+			}
+
+			curX += 60;
+		}
+
+		curX = 0;
+		curY += 60;
+	}
+
+	// var home = new paper.Raster('house');
+	// home.position = new paper.Point(home.size.width/2, home.size.height/2);
+};
+
+/** @public */
+app.Main.prototype.drawGrid = function() {
+	var curX = 0;
+	var curY = 0;
+
+	while (true) {
+		var path = new paper.Path.Rectangle(
+			new paper.Point(curX, curY), 
+			new paper.Size(60, 60)
+		);
+		path.style = {
+			fillColor   : '#62B821',
+			strokeColor : '#458117'
+		};
+		curX += 60;
+
+		if (curX > paper.view.size.width) {
+			curX = 0;
+			curY += 60;
+		}
+
+		if (curY > paper.view.size.height) {
+			break;
+		}
+	}
+};
+
+/** @public */
+app.Main.prototype.terrain = function() {
+	paper.project.activeLayer.removeChildren();
+
+	var path = new paper.Path.Rectangle(new paper.Point(80, 50), new paper.Size(paper.view.size.width, paper.view.size.height));
+	path.style = {
+		fillColor   : '#62B821',
+		strokeColor : '#62B821'
+	};
+	path.position = paper.view.center;
+	paper.view.onResize = function(event) {
+		path.position = paper.view.center;
+		path.size = new paper.Size(paper.view.size.width, paper.view.size.height);
+	};
+
+	var grass = new paper.Raster('grass');
+	grass.position = paper.view.center;
+
+	var grass2 = grass.clone();
+	grass2.position.y += 60;
+
+	grass2 = grass2.clone();
+	grass2.position.y += 60;
+
+	var home = new paper.Raster('house');
+	home.position = paper.view.center;
+	home.position.x += 120;
+	home.position.y += 60;
+
+	// home.onMouseDown = function(event) {
+	// 	util.Debug.log('down');
+	// 	util.Debug.log(event);
+	// };
+	// home.onMouseMove = function(event) {
+	// 	util.Debug.log('moving');
+	// 	util.Debug.log(event);
+	// };
+	// home.onMouseUp = function(event) {
+	// 	util.Debug.log('up');
+	// 	util.Debug.log(event);
+	// 	home.position = event.point;
+	// };
 };
 
 /** @public */
@@ -28,7 +131,7 @@ app.Main.prototype.example1 = function() {
 
 	paper.view.onFrame = function(event) {
 		path.rotate(3);
-		copy.rotate(.5);
+		// copy.rotate(.5);
 	};
 
 	paper.view.onResize = function(event) {
@@ -83,6 +186,10 @@ var main = new app.Main();
 var canvas = document.getElementById('canvas');
 
 paper.setup(canvas);
-main.example2();
+main.grid();
 paper.view.draw();
 paper.view.play();
+
+paper.view.onResize = function(event) {
+	main.grid();
+};
