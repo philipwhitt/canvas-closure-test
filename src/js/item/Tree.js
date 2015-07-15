@@ -12,10 +12,6 @@ item.Tree = function(x, y) {
 
 	this.canPass = true;
 
-	// if (app.Map[this.row][this.col+1] && !app.Map[this.row][this.col+1].type) {
-	// 	app.Map[this.row][this.col+1] = {type: '', item: new item.InvisibleBlock(true)};
-	// }
-
 	if (app.Map[this.row+1]) {
 		if (app.Map[this.row+1][this.col].type) {
 			app.Map[this.row+1][this.col].canPass = false;
