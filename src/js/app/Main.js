@@ -11,9 +11,6 @@ app.Main = function() {};
 /** @public */
 app.Main.prototype.grid = function() {
 	paper.project.activeLayer.removeChildren();
-
-	// this.drawGrid();
-	this.addItems();
 	
 	var character = new paper.Raster('female');
 	character.position = new paper.Point(character.size.width/2 + (60 * 10), character.size.height/2 + (60 * 10));
@@ -27,7 +24,29 @@ app.Main.prototype.grid = function() {
 		}
 	};
 
+	this.addItems();
+
+	// this.drawGrid();
+
+	var lastLoop = new Date;
+	var frames = 0;
+	var text = new paper.PointText({
+		content   : 'FPS (0)',
+		point     : new paper.Point(20, 30),
+		fillColor : 'black'
+	});
+
 	paper.view.onFrame = function(event) {
+		frames++;
+		var thisLoop = new Date;
+	    var fps = 1000 / (thisLoop - lastLoop);
+
+	    lastLoop = thisLoop;
+	    if (frames >= 5) {
+	    	text.content = 'FPS (' + Math.round(fps).toString() + ')';
+	    	frames=0;
+	    }
+
 		if (move.amount > 0) {
 			if (move.where == 'right') {
 				character.position.x+=4;
