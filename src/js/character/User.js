@@ -4,7 +4,14 @@ goog.provide('character.User');
  * @constructor
  */
 character.User = function() {
-	this.raster = new paper.Raster('female');
+	this.type = 'female';
+};
+
+/**
+ * @public
+ */
+character.User.prototype.render = function() {
+	this.raster = new paper.Raster(this.type);
 	this.raster.position = new paper.Point(this.raster.size.width/2 + (60 * 10), this.raster.size.height/2 + (60 * 10));
 	this.move = {where:null, amount:0};
 
@@ -37,7 +44,7 @@ character.User.prototype.canMoveHere = function() {
 			curY = Math.floor((this.raster.position.y + 60)/60);
 		}
 
-		var obj = app.Map[curY][goingX];
+		var obj = app.Map[curY] ? app.Map[curY][goingX] : null;
 
 		if (obj && obj.item && !obj.item.canPass) {
 			this.move.where = null;

@@ -29,6 +29,8 @@
 	<img id="wallEnd" src="/images/wallEnd.gif" />
 	<img id="female" src="/images/female.png" />
 	<img id="treem" src="/images/treem.png" />
+	<img id="pathv" src="/images/path-v.gif" />
+	<img id="pathh" src="/images/path-h.gif" />
 	<canvas id="canvas" resize="true"></canvas>
 	<script src="/js/paper-full.min.js"></script>
 	<script src="/js/app.js"></script>

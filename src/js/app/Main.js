@@ -5,20 +5,21 @@ goog.require('util.Debug');
 goog.require('item.Grass');
 goog.require('item.Tree');
 goog.require('item.Item');
+goog.require('item.House');
 goog.require('character.User');
 
 /**
  * @constructor
  */
-app.Main = function() {};
+app.Main = function() {
+	this.user = new character.User();
+};
 
 /** @public */
 app.Main.prototype.draw = function() {
 	paper.project.activeLayer.removeChildren();
-	
-	var user = new character.User();
 
-	this.fillOutMap();
+	this.fillOutGrid();
 	this.addItems();
 	this.drawGrid();
 
@@ -30,6 +31,7 @@ app.Main.prototype.draw = function() {
 		fillColor : 'black'
 	});
 
+	var self = this;
 	paper.view.onFrame = function(event) {
 		frames++;
 		var thisLoop = new Date;
@@ -41,12 +43,12 @@ app.Main.prototype.draw = function() {
 	    	frames=0;
 	    }
 
-	    user.onFrame();
+		self.user.onFrame();
 	};
 };
 
 /** @public */
-app.Main.prototype.fillOutMap = function() {
+app.Main.prototype.fillOutGrid = function() {
 	var numCols = Math.round(paper.view.size.width/60);
 	var numRows = Math.round(paper.view.size.height/60);
 
@@ -68,6 +70,8 @@ app.Main.prototype.addItems = function() {
 	var curX = 0;
 	var curY = 0;
 
+	var forground  = [];
+
 	// row
 	for (var row = 0, len=app.Map.length; row<len; row++) {
 		// col
@@ -78,12 +82,22 @@ app.Main.prototype.addItems = function() {
 			if (!target.item || (target.item && target.item.isInvisible)) {
 				if (target.type == 'grass') {
 					app.Map[row][col].item = new item.Grass(curX, curY);
+					app.Map[row][col].item.render();
 
 				} else if (target.type == 'treem') {
 					app.Map[row][col].item = new item.Tree(curX, curY);
+					forground.push(app.Map[row][col].item);
+
+				} else if (target.type == 'house') {
+					app.Map[row][col].item = new item.House(curX, curY);
+					app.Map[row][col].item.render();
 
 				} else if (target.type) {
 					app.Map[row][col].item = new item.Item(target.type, curX, curY);
+
+					if (!target.isInvisible) {
+						app.Map[row][col].item.render();
+					}
 				}
 
 				if (target.canPass != undefined) {
@@ -96,6 +110,12 @@ app.Main.prototype.addItems = function() {
 
 		curX = 0;
 		curY += 60;
+	}
+
+	this.user.render();
+
+	for (var i = 0, len = forground.length; i<len; i++) {
+		forground[i].render();
 	}
 };
 

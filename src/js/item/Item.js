@@ -10,7 +10,7 @@ item.Item = function(type, x, y) {
 	this.type = type; 
 
 	/** @public */
-	this.canPass = false; 
+	this.canPass = true; 
 
 	/** @public */
 	this.isInvisible = false; 
@@ -26,10 +26,15 @@ item.Item = function(type, x, y) {
 
 	/** @public */
 	this.col  = Math.floor((x + 60)/60) - 1; 
+};
 
-	if (type) {
-		var asset = new paper.Raster(type);
-		asset.position = new paper.Point(asset.size.width/2 + x, asset.size.height/2 + y);
+/**
+ * @public 
+ */
+item.Item.prototype.render = function() {
+	if (this.type) {
+		var asset = new paper.Raster(this.type);
+		asset.position = new paper.Point(asset.size.width/2 + this.x, asset.size.height/2 + this.y);
 	}
 };
 
