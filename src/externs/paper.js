@@ -209,6 +209,24 @@ paper.Path.prototype.lineTo = function(point){};
 
 
 /** 
+ * @param {*} dem1
+ * @param {*=} dem2
+ * @constructor 
+ * @extends{paper.Item} 
+ */
+paper.Shape = function(dem1, dem2) {};
+
+
+/** 
+ * @param {*} dem1
+ * @param {*=} dem2
+ * @constructor 
+ * @extends{paper.Shape} 
+ */
+paper.Shape.Rectangle = function(dem1, dem2) {};
+
+
+/** 
  * @constructor 
  * @extends{paper.Path} 
  */
@@ -222,6 +240,13 @@ paper.Path.Rectangle = function(dem1, dem2) {};
  * @extends{paper.Path} 
  */
 paper.Path.Circle = function(dem1, dem2) {};
+
+
+/** 
+ * @constructor 
+ * @extends{paper.Path} 
+ */
+paper.Path.Line = function(dem1, dem2) {};
 
 
 
@@ -356,6 +381,26 @@ paper.Item.prototype.localToParent = function(point) {}
  */
 paper.Item.prototype.fitBounds = function(rectangle, fill) {}
 
+
+
+/** 
+ * @param {paper.Item} item
+ * @constructor 
+ */
+paper.Symbol = function(item) {};
+/**
+ * @param {*=} position
+ * @public
+ */
+paper.Symbol.prototype.place = function(position){};
+/**
+ * @public
+ */
+paper.Symbol.prototype.clone = function(){};
+/**
+ * @public
+ */
+paper.Symbol.prototype.equals = function(symbol){};
 
 
 /** 

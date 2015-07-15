@@ -2,6 +2,8 @@ goog.provide('app.Main');
 
 goog.require('app.Map');
 goog.require('util.Debug');
+goog.require('item.Grass');
+goog.require('item.Item');
 
 /**
  * @constructor
@@ -26,7 +28,7 @@ app.Main.prototype.draw = function() {
 
 	this.addItems();
 
-	// this.drawGrid();
+	this.drawGrid();
 
 	var lastLoop = new Date;
 	var frames = 0;
@@ -49,6 +51,19 @@ app.Main.prototype.draw = function() {
 
 		if (move.amount > 0) {
 			if (move.where == 'right') {
+				if (move.amount == 60) {
+					var goingX = Math.floor((character.position.x + 60)/60);
+					var curY = Math.floor((character.position.y)/60);
+
+					var obj = app.Map[curY][goingX];
+
+					if (obj && obj.item && !obj.item.canPass()) {
+						move.where = null;
+						move.amount = 0;
+						return;
+					}
+				}
+
 				character.position.x+=4;
 			}
 
@@ -80,9 +95,13 @@ app.Main.prototype.addItems = function() {
 		for (var col = 0, lenCol=app.Map[row].length; col<lenCol; col++) {
 			var target = app.Map[row][col];
 
-			if (target.type) {
-				var asset = new paper.Raster(target.type);
-				asset.position = new paper.Point(asset.size.width/2 + curX, asset.size.height/2 + curY);
+			if (target.type == 'grass') {
+				app.Map[row][col].item = new item.Grass(curX, curY);
+
+			} else if (target.type) {
+				app.Map[row][col].item = new item.Item(target.type, curX, curY);
+				// var asset = new paper.Raster(target.type);
+				// asset.position = new paper.Point(asset.size.width/2 + curX, asset.size.height/2 + curY);
 			}
 
 			curX += 60;
@@ -95,25 +114,35 @@ app.Main.prototype.addItems = function() {
 
 /** @public */
 app.Main.prototype.drawGrid = function() {
-	var curX = 0;
-	var curY = 0;
+	var curX = 60;
+	var curY = 60;
 
+	// draw Y
 	while (true) {
-		var path = new paper.Path.Rectangle(
-			new paper.Point(curX, curY), 
-			new paper.Size(60, 60)
+		var yLine = new paper.Path.Line(
+			new paper.Point(0, curY),
+			new paper.Point(paper.view.size.width, curY)
 		);
-		path.style = {
-			strokeColor : '#5BB01B'
-		};
+		yLine.strokeColor = '#5BB01B';
+
+		curY += 60;
+
+		if (curY > paper.view.size.height) {
+			break;
+		}
+	}
+
+	// draw X
+	while (true) {
+		var xLine = new paper.Path.Line(
+			new paper.Point(curX, 0),
+			new paper.Point(curX, paper.view.size.height)
+		);
+		xLine.strokeColor = '#5BB01B';
+
 		curX += 60;
 
 		if (curX > paper.view.size.width) {
-			curX = 0;
-			curY += 60;
-		}
-
-		if (curY > paper.view.size.height) {
 			break;
 		}
 	}
