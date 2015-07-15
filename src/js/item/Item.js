@@ -1,26 +1,41 @@
 goog.provide('item.Item');
 
+goog.require('util.Debug');
+
 /**
  * @constructor
  */
-item.Item = function(type, row, col) {
-	/** @protected */
+item.Item = function(type, x, y) {
+	/** @public */
+	this.type = type; 
 
-	this.type_ = type; 
+	/** @public */
+	this.canPass = false; 
 
-	/** @protected */
-	this.row_  = row; 
+	/** @public */
+	this.isInvisible = false; 
 
-	/** @protected */
-	this.col_  = col;
+	/** @public */
+	this.x = x; 
 
-	var asset = new paper.Raster(type);
-	asset.position = new paper.Point(asset.size.width/2 + row, asset.size.height/2 + col);
+	/** @public */
+	this.y = y;
+
+	/** @public */
+	this.row  = Math.floor((y + 60)/60) - 1; 
+
+	/** @public */
+	this.col  = Math.floor((x + 60)/60) - 1; 
+
+	if (type) {
+		var asset = new paper.Raster(type);
+		asset.position = new paper.Point(asset.size.width/2 + x, asset.size.height/2 + y);
+	}
 };
 
 /**
- * @public 
+ * @protected 
  */
-item.Item.prototype.canPass = function() {
-	return false;
+item.Item.prototype.log = function(l) {
+	util.Debug.log(l);
 };

@@ -6,12 +6,9 @@ goog.require('item.Item');
  * @constructor
  * @extends {item.Item}
  */
-item.Grass = function(row, col) {
-	goog.base(this, 'grass', row, col);
+item.Grass = function(x, y) {
+	goog.base(this, 'grass', x, y);
+
+	this.canPass = true;
 };
 goog.inherits(item.Grass, item.Item);
-
-/** @inheritDoc */
-item.Grass.prototype.canPass = function() {
-	return true;
-};

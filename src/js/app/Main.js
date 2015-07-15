@@ -3,6 +3,7 @@ goog.provide('app.Main');
 goog.require('app.Map');
 goog.require('util.Debug');
 goog.require('item.Grass');
+goog.require('item.Tree');
 goog.require('item.Item');
 
 /**
@@ -26,9 +27,11 @@ app.Main.prototype.draw = function() {
 		}
 	};
 
+	this.fillOutMap();
 	this.addItems();
-
 	this.drawGrid();
+
+	util.Debug.log(app.Map);
 
 	var lastLoop = new Date;
 	var frames = 0;
@@ -57,7 +60,7 @@ app.Main.prototype.draw = function() {
 
 					var obj = app.Map[curY][goingX];
 
-					if (obj && obj.item && !obj.item.canPass()) {
+					if (obj && obj.item && !obj.item.canPass) {
 						move.where = null;
 						move.amount = 0;
 						return;
@@ -85,6 +88,24 @@ app.Main.prototype.draw = function() {
 };
 
 /** @public */
+app.Main.prototype.fillOutMap = function() {
+	var numCols = Math.round(paper.view.size.width/60);
+	var numRows = Math.round(paper.view.size.height/60);
+
+	for (var row = 0, len=numRows; row<len; row++) {
+		if (!app.Map[row]) {
+			app.Map[row] = [];
+		}
+
+		for (var col = 0, lenCol=numCols; col<lenCol; col++) {
+			if (!app.Map[row][col]) {
+				app.Map[row][col] = {};
+			}
+		}
+	}
+};
+
+/** @public */
 app.Main.prototype.addItems = function() {
 	var curX = 0;
 	var curY = 0;
@@ -95,13 +116,21 @@ app.Main.prototype.addItems = function() {
 		for (var col = 0, lenCol=app.Map[row].length; col<lenCol; col++) {
 			var target = app.Map[row][col];
 
-			if (target.type == 'grass') {
-				app.Map[row][col].item = new item.Grass(curX, curY);
+			// skip items already added
+			if (!target.item || (target.item && target.item.isInvisible)) {
+				if (target.type == 'grass') {
+					app.Map[row][col].item = new item.Grass(curX, curY);
 
-			} else if (target.type) {
-				app.Map[row][col].item = new item.Item(target.type, curX, curY);
-				// var asset = new paper.Raster(target.type);
-				// asset.position = new paper.Point(asset.size.width/2 + curX, asset.size.height/2 + curY);
+				} else if (target.type == 'treem') {
+					app.Map[row][col].item = new item.Tree(curX, curY);
+
+				} else if (target.type) {
+					app.Map[row][col].item = new item.Item(target.type, curX, curY);
+				}
+
+				if (target.canPass != undefined) {
+					app.Map[row][col].item.canPass = target.canPass;
+				}
 			}
 
 			curX += 60;
