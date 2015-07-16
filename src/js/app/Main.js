@@ -7,6 +7,7 @@ goog.require('item.Tree');
 goog.require('item.Item');
 goog.require('item.House');
 goog.require('character.User');
+goog.require('goog.json');
 
 /**
  * @constructor
@@ -16,8 +17,29 @@ app.Main = function() {
 };
 
 /** @public */
+app.Main.socket = null;
+
+/** @public */
 app.Main.prototype.draw = function() {
 	paper.project.activeLayer.removeChildren();
+
+	var newUser;
+
+	app.Main.socket = new WebSocket('ws://canvastest.corn:8080');
+	app.Main.socket.onopen = function(e) {
+		util.Debug.log("Connection established!");
+		app.Main.socket.send('{"action" : "newUser"}');
+	};
+	app.Main.socket.onmessage = function(e) {
+		util.Debug.log(e);
+		var data = goog.json.parse(e.data);
+		if (data['action'] == 'newUser') {
+			newUser = new character.User();
+			newUser.render();
+		} else if (newUser) {
+			newUser.moveTo(data['action']);
+		}
+	};
 
 	this.fillOutGrid();
 	this.addItems();
@@ -44,6 +66,10 @@ app.Main.prototype.draw = function() {
 	    }
 
 		self.user.onFrame();
+
+		if (newUser) {
+			newUser.onFrame();
+		}
 	};
 };
 

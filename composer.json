@@ -1,9 +1,11 @@
 {
 	"min-stability" : "dev",
 	"require": {
+		"cboden/ratchet" : "0.3.*"
 	},
 	"autoload": {
 		"psr-0": {
+			"App" : "src/server"
 		}
 	}
 }

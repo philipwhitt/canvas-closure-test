@@ -17,10 +17,27 @@ character.User.prototype.render = function() {
 
 	var self = this;
 	var tool = new paper.Tool();
+
 	tool.onKeyDown = function(event) {
 		if (self.move.amount == 0) {
-			self.move.where = event.key;
-			self.move.amount = 60;
+			self.moveTo(event.key);
+
+			if (self.move.where == 'right') {
+				app.Main.socket.send('{"action" : "right"}');
+			}
+
+			if (self.move.where == 'left') {
+				app.Main.socket.send('{"action" : "left"}');
+			}
+
+			if (self.move.where == 'up') {
+				app.Main.socket.send('{"action" : "up"}');
+			}
+
+			if (self.move.where == 'down') {
+				app.Main.socket.send('{"action" : "down"}');
+			}
+
 		}
 	};
 };
@@ -54,6 +71,14 @@ character.User.prototype.canMoveHere = function() {
 	}
 
 	return true;
+};
+
+/**
+ * @public
+ */
+character.User.prototype.moveTo = function(where) {
+	this.move.where = where;
+	this.move.amount = 60;
 };
 
 /**
