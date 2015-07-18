@@ -25,21 +25,21 @@ app.Main.prototype.draw = function() {
 
 	var newUser;
 
-	app.Main.socket = new WebSocket('ws://canvastest.corn:8080');
-	app.Main.socket.onopen = function(e) {
-		util.Debug.log("Connection established!");
-		app.Main.socket.send('{"action" : "newUser"}');
-	};
-	app.Main.socket.onmessage = function(e) {
-		util.Debug.log(e);
-		var data = goog.json.parse(e.data);
-		if (data['action'] == 'newUser') {
-			newUser = new character.User();
-			newUser.render();
-		} else if (newUser) {
-			newUser.moveTo(data['action']);
-		}
-	};
+	// app.Main.socket = new WebSocket('ws://canvastest.corn:8080');
+	// app.Main.socket.onopen = function(e) {
+	// 	util.Debug.log("Connection established!");
+	// 	app.Main.socket.send('{"action" : "newUser"}');
+	// };
+	// app.Main.socket.onmessage = function(e) {
+	// 	util.Debug.log(e);
+	// 	var data = goog.json.parse(e.data);
+	// 	if (data['action'] == 'newUser') {
+	// 		newUser = new character.User();
+	// 		newUser.render();
+	// 	} else if (newUser) {
+	// 		newUser.moveTo(data['action']);
+	// 	}
+	// };
 
 	this.fillOutGrid();
 	this.addItems();

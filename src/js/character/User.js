@@ -22,22 +22,21 @@ character.User.prototype.render = function() {
 		if (self.move.amount == 0) {
 			self.moveTo(event.key);
 
-			if (self.move.where == 'right') {
-				app.Main.socket.send('{"action" : "right"}');
-			}
+			// if (self.move.where == 'right') {
+			// 	app.Main.socket.send('{"action" : "right"}');
+			// }
 
-			if (self.move.where == 'left') {
-				app.Main.socket.send('{"action" : "left"}');
-			}
+			// if (self.move.where == 'left') {
+			// 	app.Main.socket.send('{"action" : "left"}');
+			// }
 
-			if (self.move.where == 'up') {
-				app.Main.socket.send('{"action" : "up"}');
-			}
+			// if (self.move.where == 'up') {
+			// 	app.Main.socket.send('{"action" : "up"}');
+			// }
 
-			if (self.move.where == 'down') {
-				app.Main.socket.send('{"action" : "down"}');
-			}
-
+			// if (self.move.where == 'down') {
+			// 	app.Main.socket.send('{"action" : "down"}');
+			// }
 		}
 	};
 };
