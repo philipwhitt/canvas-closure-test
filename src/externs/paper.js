@@ -162,6 +162,11 @@ paper.Path.prototype.selected;
  */
 paper.Path.prototype.bounds = {bottomLeft:0};
 /** 
+ * @type {paper.Point}
+ * @public 
+ */
+paper.Path.prototype.position;
+/** 
  * @type {Object} 
  * @public 
  */

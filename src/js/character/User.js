@@ -11,8 +11,11 @@ character.User = function() {
  * @public
  */
 character.User.prototype.render = function() {
+	var midRows = Math.round(paper.view.size.height / 60 / 2);
+	var midCols = Math.round(paper.view.size.width / 60 / 2 );
+
 	this.raster = new paper.Raster(this.type);
-	this.raster.position = new paper.Point(this.raster.size.width/2 + (60 * 10), this.raster.size.height/2 + (60 * 10));
+	this.raster.position = new paper.Point(midCols * 60, midRows * 60);
 	this.move = {where:null, amount:0};
 
 	var self = this;
@@ -85,9 +88,9 @@ character.User.prototype.moveTo = function(where) {
  */
 character.User.prototype.onFrame = function() {
 	if (this.move.amount > 0) {
-		if (!this.canMoveHere()) {
-			return;
-		}
+		// if (!this.canMoveHere()) {
+		// 	return;
+		// }
 
 		if (this.move.where == 'right') {
 			this.raster.position.x+=4;

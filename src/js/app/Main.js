@@ -1,6 +1,8 @@
 goog.provide('app.Main');
 
 goog.require('app.Map');
+goog.require('app.PopToGrid');
+goog.require('app.MovableGridTest');
 goog.require('util.Debug');
 goog.require('item.Grass');
 goog.require('item.Tree');
@@ -18,6 +20,34 @@ app.Main = function() {
 
 /** @public */
 app.Main.socket = null;
+
+/** @public */
+app.Main.prototype.activeGrid = function() {
+	this.drawGrid();
+
+	new app.MovableGridTest();
+
+	var lastLoop = new Date;
+	var frames = 0;
+	var text = new paper.PointText({
+		content   : 'FPS (0)',
+		point     : new paper.Point(20, 30),
+		fillColor : 'black'
+	});
+
+	// var self = this;
+	// paper.view.onFrame = function(event) {
+	// 	frames++;
+	// 	var thisLoop = new Date;
+	//     var fps = 1000 / (thisLoop - lastLoop);
+
+	//     lastLoop = thisLoop;
+	//     if (frames >= 5) {
+	//     	text.content = 'FPS (' + Math.round(fps).toString() + ')';
+	//     	frames=0;
+	//     }
+	// };
+};
 
 /** @public */
 app.Main.prototype.draw = function() {
@@ -181,14 +211,16 @@ app.Main.prototype.drawGrid = function() {
 	}
 };
 
-var main = new app.Main();
+// var main = new app.Main();
 var canvas = document.getElementById('canvas');
 
 paper.setup(canvas);
-main.draw();
+// main.activeGrid();
+new app.PopToGrid();
+
 paper.view.draw();
 paper.view.play();
 
-paper.view.onResize = function(event) {
-	main.draw();
-};
+// paper.view.onResize = function(event) {
+// 	main.draw();
+// };

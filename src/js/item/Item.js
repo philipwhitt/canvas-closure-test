@@ -26,6 +26,9 @@ item.Item = function(type, x, y) {
 
 	/** @public */
 	this.col  = Math.floor((x + 60)/60) - 1; 
+
+	/** @public */
+	this.asset = null;
 };
 
 /**
@@ -33,8 +36,8 @@ item.Item = function(type, x, y) {
  */
 item.Item.prototype.render = function() {
 	if (this.type) {
-		var asset = new paper.Raster(this.type);
-		asset.position = new paper.Point(asset.size.width/2 + this.x, asset.size.height/2 + this.y);
+		this.asset = new paper.Raster(this.type);
+		this.asset.position = new paper.Point(this.asset.size.width/2 + this.x, this.asset.size.height/2 + this.y);
 	}
 };
 
