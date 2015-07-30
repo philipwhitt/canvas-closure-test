@@ -12,14 +12,15 @@
 		html,
 		body {
 			margin: 0;
-			overflow: hidden;
+			padding: 0;
+			overflow: scroll;
 			height: 100%;
 		}
 		.hidden {display: none;}
 		/* Scale canvas with resize attribute to full size */
-		canvas[resize] {
-			width: 100%;
-			height: 100%;
+		canvas {
+			/*width: 2000px;*/
+			height: 2000px;
 			background: #70C7A2 url(/images/bg.gif) repeat;
 		}
 		.hud .assets {
@@ -80,7 +81,7 @@
 		</div>
 	</div>
 
-	<canvas id="canvas" resize="true"></canvas>
+	<canvas id="canvas"></canvas>
 
 	<script src="/js/paper-full.min.js"></script>
 	<script src="/js/app.js"></script>

@@ -144,6 +144,7 @@ paper.PointText.prototype.content;
 /** 
  * @param {Object=} options
  * @constructor 
+ * @extends {paper.Item} 
  */
 paper.Path = function(options) {};
 /** 
@@ -409,10 +410,12 @@ paper.Symbol.prototype.equals = function(symbol){};
 
 
 /** 
+ * @param {string} id 
+ * @param {paper.Point=} point 
  * @constructor 
  * @extends{paper.Item} 
  */
-paper.Raster = function(id) {};
+paper.Raster = function(id, point) {};
 /**
  * @public
  */

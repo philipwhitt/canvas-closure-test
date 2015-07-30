@@ -12,6 +12,7 @@
 			<arg value="--root=src/closure" /> 
 			<arg value="--root=src/js" /> 
 			<arg line='-f "--externs=src/externs/paper.js"' />
+			<arg line='-f "--externs=src/externs/jquery.js"' />
 			<arg value="--output_file=build/app.js" />
 			<arg value="--output_mode=compiled" />
 			<arg value="--compiler_jar=src/closure/closure-compiler/compiler.jar" />
